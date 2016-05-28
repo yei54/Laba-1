@@ -107,7 +107,7 @@ void PrintAllDrobi(Drobina **MassUkazatelei, int sizemass)
 {
 	for (int i = 0; i < sizemass; i++)
 	{
-		printf("%d/%d\t", *MassUkazatelei[i]);
+		printf("%d/%d\t", *MassUkazatelei[i]); // вывод не потоковый
 		//cout << MassUkazatelei[i] << "\t";
 	}
 }
