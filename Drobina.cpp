@@ -1,48 +1,52 @@
-#include "Drob.h"
+#include "Drobina.h"
 
 
 
-Drob::Drob()
+Drobina::Drobina()
 {
-	Chislitel;
-	Znamenatel;
+	Chislitel = 0;//rand() % 12 + 1;
+	Znamenatel = 0;//rand() % 40 + 12;
 }
-
-
-Drob::~Drob()
+Drobina::Drobina(int ch, int zn)
+{
+	Chislitel = ch;//rand() % 12 + 1;
+	Znamenatel = zn;//rand() % 40 + 12;
+}
+Drobina::~Drobina()
 {
 }
-
-void Drob::setChislitel(ui a)
+void Drobina::AddDrobina(int ch, int zn)
+{
+	Chislitel = ch;//rand() % 12 + 1;
+	Znamenatel = zn;//rand() % 40 + 12;
+}
+void Drobina::setChislitel(int a)
 {
 	Chislitel = a;
 }
-int Drob::getChislitel()
+int  Drobina::getChislitel()
 {
 	return Chislitel;
 }
-void Drob::setZnamenatel(ui a)
+
+void Drobina::setZnamenatel(int a)
 {
 	Znamenatel = a;
 }
-int Drob::getZnamenatel()
+
+int Drobina::getZnamenatel()
 {
 	return Znamenatel;
 }
 
-void Drob::Scan()
+void Drobina::Print()
 {
-	cout << "Введите 'Числитель пробел Знаменатель', нажмите Enter" << endl;
-	cin >> Chislitel >> Znamenatel;
+	cout << endl << endl << Chislitel << "/" << Znamenatel << endl;
 }
 
-void Drob::Print()
+void Drobina::Sokratit()
 {
-	cout << endl << Chislitel << " / " << Znamenatel << endl;
-}
 
-void Drob::Sokratit()
-{
 	int x = (Chislitel < Znamenatel) ? Chislitel : Znamenatel; // Если числитель меньше знаменателя, то выбираем числитель  пример -  6 меньше 9, берем 6
 	for (int i = x; i > 0; i--) // Поехали циклом по убыванию от значения х = 6
 	{
@@ -55,13 +59,14 @@ void Drob::Sokratit()
 	}
 }
 
-void Drob::Umnogenie(Drob aa)
+void Drobina::Umnogenie(Drobina aa)
 {
 	Chislitel *= aa.getChislitel();
 	Znamenatel *= aa.getZnamenatel();
 	Sokratit();
 }
-void Drob::Delenie(Drob aa)
+
+void Drobina::Delenie(Drobina aa)
 {
 	Chislitel *= aa.getZnamenatel();
 	Znamenatel *= aa.getChislitel();
