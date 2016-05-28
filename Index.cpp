@@ -4,6 +4,7 @@ void DvumerMassUkaz(Drobina ***MassUkazatelei, int sizemass);
 void AddDrob(Drobina ***MassUkazatelei, int NumberObj);
 void СhangeDrob(Drobina ***MassUkazatelei, int NumberObj);
 void DelDvumerMassUkaz(Drobina **MassUkazatelei, int sizemass);
+void PrintDrob(Drobina **MassUkazatelei, int NumberObj);
 void PrintAllDrobi(Drobina **MassUkazatelei, int sizemass);
 void main()
 {
@@ -23,6 +24,8 @@ void main()
 		cout << endl << endl << "1. Добавить дробь." << endl;
 		cout << endl << endl << "2. Изменить дробь." << endl;
 		cout << endl << endl << "3. Показать все дроби." << endl;
+		cout << endl << endl << "\n4. Сократить дробь." << endl;
+		cout << endl << endl << "5. Умножить дроби." << endl;
 		cout << endl << "0. Выход." << endl << endl;
 
 		cin >> c;
@@ -52,9 +55,29 @@ void main()
 			СhangeDrob(&MassUkazatelei, numObj);
 			break;
 		case '3':
-			
-			
 			PrintAllDrobi(MassUkazatelei, SizeMass);
+
+			break;
+		case '4':
+			int numObj1;
+			cout << "Сокращение дроби, введите номер сокращаемого объекта, от 1 до " << NumberObj << ", нажмите Enter" << endl;
+			cin >> numObj1;
+			PrintDrob(MassUkazatelei, numObj1);
+			(*MassUkazatelei)[(numObj1 - 1)].Sokratit();
+			PrintDrob(MassUkazatelei, numObj1);
+			Sleep(2000);
+			system("cls");
+			break;
+		case '5':
+			int numObj2;
+			int numObj3;
+			cout << "Умножение дробей, введите номера умножаемых объектов, через пробел, от 1 до " << NumberObj << ", нажмите Enter" << endl;
+			cin >> numObj2 >> numObj3;
+			PrintDrob(MassUkazatelei, numObj2);
+			(*MassUkazatelei)[(numObj2 - 1)].Umnogenie((*MassUkazatelei)[(numObj3 - 1)]);
+			PrintDrob(MassUkazatelei, numObj2);
+			Sleep(2000);
+			system("cls");
 			break;
 		default:
 			break;
@@ -103,11 +126,18 @@ void DelDvumerMassUkaz(Drobina **MassUkazatelei, int sizemass)
 	}
 	delete[] MassUkazatelei;
 }
+void PrintDrob(Drobina **MassUkazatelei, int num)
+{
+	
+		printf("%d/%d\t", *MassUkazatelei[(num - 1)]);
+		//cout << MassUkazatelei[i] << "\t";
+	
+}
 void PrintAllDrobi(Drobina **MassUkazatelei, int sizemass)
 {
 	for (int i = 0; i < sizemass; i++)
 	{
-		printf("%d/%d\t", *MassUkazatelei[i]); // вывод не потоковый
+		printf("%d/%d\t", *MassUkazatelei[i]);
 		//cout << MassUkazatelei[i] << "\t";
 	}
 }
