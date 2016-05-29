@@ -11,14 +11,15 @@ public:
 	Drobina();
 	Drobina(int, int);
 	~Drobina();
-	void AddDrobina(int, int);
+	void Change(int, int);
 	void setChislitel(int);
 	int  getChislitel();
 	void setZnamenatel(int);
 	int  getZnamenatel();
-	void Print();
 	void Sokratit();
 	void Umnogenie(Drobina);
 	void Delenie(Drobina);
+	void Show();
+	//bool Add(int, int)
 };
 
