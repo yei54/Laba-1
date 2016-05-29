@@ -1,22 +1,16 @@
 #include "Drobina.h"
 
-void DvumerMassUkaz(Drobina ***MassUkazatelei, int sizemass);
-void AddDrob(Drobina ***MassUkazatelei, int NumberObj);
-void СhangeDrob(Drobina ***MassUkazatelei, int NumberObj);
-void DelDvumerMassUkaz(Drobina **MassUkazatelei, int sizemass);
-void PrintDrob(Drobina **MassUkazatelei, int NumberObj);
-void PrintAllDrobi(Drobina **MassUkazatelei, int sizemass);
+
 void main()
 {
 	setlocale(LC_ALL, "Rus");
-	Drobina **MassUkazatelei = NULL; //указатель на указатель
-	int SizeMass = 0;
+	static int Size = 0; // размер массива
+	static int Counter = 0; // число объектов
 	cout << "Введите размер массива объектов, затем Enter.\n";
-	cin >> SizeMass;
+	cin >> Size;
+	Drobina *p_List = new Drobina[Size];
 	system("cls");
-	int NumberObj = 0; // кол-во объектов
 
-	DvumerMassUkaz(&MassUkazatelei, SizeMass);
 
 	char c = 0;
 	while (c != '0')
@@ -24,8 +18,10 @@ void main()
 		cout << endl << endl << "1. Добавить дробь." << endl;
 		cout << endl << endl << "2. Изменить дробь." << endl;
 		cout << endl << endl << "3. Показать все дроби." << endl;
-		cout << endl << endl << "\n4. Сократить дробь." << endl;
+		cout << endl << endl << "4. Сократить дробь." << endl;
 		cout << endl << endl << "5. Умножить дроби." << endl;
+		cout << endl << endl << "6. Разделить дроби." << endl;
+		cout << endl << endl << "7. Удалить дробь." << endl;
 		cout << endl << "0. Выход." << endl << endl;
 
 		cin >> c;
@@ -33,51 +29,107 @@ void main()
 		switch (c)
 		{
 		case '1':
-			if((NumberObj + 1) <= SizeMass)
+			if(Counter < Size)
 			{
-				NumberObj++;
-				AddDrob(&MassUkazatelei, NumberObj);
-				cout << NumberObj << endl;
+				int Cislit;
+				int Znamen;
+				cout << "Введите числитель 'пробел' знаменатель, нажмите Enter" << endl;
+				cin >> Cislit >> Znamen;
+
+				if (Znamen != 0)
+				{
+					p_List[Counter].Change(Cislit, Znamen);
+					Counter++;
+				}
+				else
+				{
+					cout << "Знаменатель не может быть 0" << endl;
+					Sleep(2000);
+					system("cls");
+				}
+				system("cls");
 				break;
 			}
 			else
 			{
-				cout << "Дробь не создана! Массив полон." << endl;
+				cout << "Список полон. Дробь не создана! " << endl;
 				Sleep(2000);
 				system("cls");
 				break;
 			}
 		case '2':
-			int numObj;
-			cout << "Введите номер изменяемого объекта, от 1 до " << NumberObj << ", нажмите Enter" << endl;
-			cin >> numObj;
+			int edit;
+			cout << "Введите номер изменяемого объекта, от 0 до " << Counter << ", нажмите Enter" << endl;
+			cin >> edit;
 			system("cls");
-			СhangeDrob(&MassUkazatelei, numObj);
+			int Cislit;
+			int Znamen;
+			cout << "Введите числитель 'пробел' знаменатель, нажмите Enter" << endl;
+			cin >> Cislit >> Znamen;
+			p_List[edit].Change(Cislit, Znamen);
 			break;
 		case '3':
-			PrintAllDrobi(MassUkazatelei, SizeMass);
-
+				
+				for (int i = 0; i < Size; i++)
+				{
+					p_List[i].Show();
+				}
+				
 			break;
 		case '4':
-			int numObj1;
-			cout << "Сокращение дроби, введите номер сокращаемого объекта, от 1 до " << NumberObj << ", нажмите Enter" << endl;
-			cin >> numObj1;
-			PrintDrob(MassUkazatelei, numObj1);
-			(*MassUkazatelei)[(numObj1 - 1)].Sokratit();
-			PrintDrob(MassUkazatelei, numObj1);
+			int index;
+			cout << "Сокращение дроби, введите номер сокращаемой дроби, от 1 до " << Counter << ", нажмите Enter" << endl;
+			cin >> index;
+			p_List[(index - 1)].Show();
+			cout << ">>\t";
+			p_List[(index - 1)].Sokratit();
+			p_List[(index - 1)].Show();
+
 			Sleep(2000);
 			system("cls");
 			break;
 		case '5':
-			int numObj2;
-			int numObj3;
-			cout << "Умножение дробей, введите номера умножаемых объектов, через пробел, от 1 до " << NumberObj << ", нажмите Enter" << endl;
-			cin >> numObj2 >> numObj3;
-			PrintDrob(MassUkazatelei, numObj2);
-			(*MassUkazatelei)[(numObj2 - 1)].Umnogenie((*MassUkazatelei)[(numObj3 - 1)]);
-			PrintDrob(MassUkazatelei, numObj2);
+			int first;
+			int second;
+			cout << "Умножение дробей, введите номера умножаемых дробей, через пробел, от 1 до " << Counter << ", нажмите Enter" << endl;
+			cin >> first >> second;
+
+			p_List[first].Show();
+			p_List[first].Umnogenie( p_List[second] );
+			p_List[first].Show();
+
 			Sleep(2000);
 			system("cls");
+			break;
+		case '6':
+			int A;
+			int B;
+			cout << "Деление дробей, введите номера делимых дробей, через пробел, от 1 до " << Counter << ", нажмите Enter" << endl;
+			cin >> A >> B;
+
+			p_List[A].Show();
+			p_List[A].Delenie(p_List[B]);
+			p_List[A].Show();
+
+			Sleep(2000);
+			system("cls");
+			break;
+		case '7':
+			int target;
+			cout << "Введите индекс дроби для удаления (отсчет с нуля)\n";
+			cin >> target;
+			if (target>=0 && target<Counter)
+			{
+				cout << " Дробь "; 
+				p_List[target].Show();
+				cout << "удалена";
+				p_List[target].Change(0, 0);
+			}
+			else
+			{
+				cout << "некоретный индекс"; 
+			}
+
 			break;
 		default:
 			break;
@@ -85,59 +137,38 @@ void main()
 
 		
 	}
+	delete[] p_List;
 
-	DelDvumerMassUkaz(MassUkazatelei, SizeMass);
-
-}
-
-void DvumerMassUkaz(Drobina ***MassUkazatelei, int sizemass)
-{
-	*MassUkazatelei = new Drobina*[sizemass];
-	for (int i = 0; i < sizemass; i++)
-	{
-		(*MassUkazatelei)[i] = new Drobina();
-	}
-}
-void AddDrob(Drobina ***MassUkazatelei, int num)
-{
-	int Cislit;
-	int Znamen;
-	cout << "Введите числитель 'пробел' знаменатель, нажмите Enter" << endl;
-	cin >> Cislit >> Znamen;
-	system("cls");
-	(*MassUkazatelei)[(num - 1)] = new Drobina(Cislit, Znamen);
-	
-}
-void СhangeDrob(Drobina ***MassUkazatelei, int num)
-{
-	int Cislit;
-	int Znamen;
-	cout << "Введите числитель 'пробел' знаменатель, нажмите Enter" << endl;
-	cin >> Cislit >> Znamen;
-	system("cls");
-	(*MassUkazatelei)[(num - 1)] = new Drobina(Cislit, Znamen);
 }
 
-void DelDvumerMassUkaz(Drobina **MassUkazatelei, int sizemass)
-{
-	for (int i = 0; i < sizemass; i++)
-	{
-		delete MassUkazatelei[i];
-	}
-	delete[] MassUkazatelei;
-}
-void PrintDrob(Drobina **MassUkazatelei, int num)
-{
-	
-		printf("%d/%d\t", *MassUkazatelei[(num - 1)]);
-		//cout << MassUkazatelei[i] << "\t";
-	
-}
-void PrintAllDrobi(Drobina **MassUkazatelei, int sizemass)
-{
-	for (int i = 0; i < sizemass; i++)
-	{
-		printf("%d/%d\t", *MassUkazatelei[i]);
-		//cout << MassUkazatelei[i] << "\t";
-	}
-}
+
+
+
+
+/*
+Динамическое выделение памяти. +
+Потоковый ввод/вывод. +
+Закрытые и открытые члены класса, их отличие. +
+Конструктор по умолчанию и деструктор, их назначение. +
+Конструктор с параметрами.
+Перегрузка конструкторов.
+Использование списка инициализации. +
+Статические члены класса. 
+
+Данные-члены, типы и количество которых хорошо подходят для хранения и представления соответствующих значений. +
+Конструктор по умолчанию, конструктор с параметрами (возможно, не один), конструктор копирования и деструктор. +
+Методы установки значений и вывода значений на экран (использовать потоковый ввод/вывод). +
+Static-счетчик количества существующих объектов класса. +
+В подходящих для этого методах, используйте параметры по умолчанию. +
+Используйте в конструкторах список инициализации. +
+
+1) После разработки класса можно протестировать правильность его работы, создав в функции void main() объект разработанного класса. Проверьте правильность работы его конструкторов, вызовите методы класса, убедитесь в том, что все они работают верно.
+2) Реализуйте динамическую структуру хранения объектов класса (массив указателей). При запуске программы пользователю должна предоставляться возможность указания размера массива. +
+3) В программе должен присутствовать пользовательский интерфейс, в котором есть возможность выбрать любую из предоставляемых классом операцию (работа всех методов должна быть наблюдаема). +
+Пользовательский интерфейс должен обеспечивать возможность:
+Создание нового объекта (со значениями по умолчанию, как копия уже существующего в массиве указателей, с вводом значений) и вставку его в массив.
+Просмотра содержимого всех объектов массива (предусмотреть форматированный вывод). +
+Изменение содержимого объекта с заданным номером. +
+Удаление объекта с заданным номером (сдвиг массива указателей учитывать не обязательно). +
+Вызов любого метода для объекта с заданным номером. +
+*/
