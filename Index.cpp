@@ -94,9 +94,10 @@ void main()
 			cout << "Умножение дробей, введите номера умножаемых дробей, через пробел, от 1 до " << Counter << ", нажмите Enter" << endl;
 			cin >> first >> second;
 
-			p_List[first].Show();
-			p_List[first].Umnogenie( p_List[second] );
-			p_List[first].Show();
+			p_List[first - 1].Show();
+			p_List[first - 1].Umnogenie( p_List[second - 1] );
+			cout << ">>\t";
+			p_List[first - 1].Show();
 
 			Sleep(2000);
 			system("cls");
@@ -107,9 +108,10 @@ void main()
 			cout << "Деление дробей, введите номера делимых дробей, через пробел, от 1 до " << Counter << ", нажмите Enter" << endl;
 			cin >> A >> B;
 
-			p_List[A].Show();
-			p_List[A].Delenie(p_List[B]);
-			p_List[A].Show();
+			p_List[A - 1].Show();
+			p_List[A - 1].Delenie(p_List[B - 1]);
+			cout << ">>\t";
+			p_List[A - 1].Show();
 
 			Sleep(2000);
 			system("cls");
