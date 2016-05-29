@@ -4,21 +4,23 @@
 
 Drobina::Drobina()
 {
-	Chislitel = 0;//rand() % 12 + 1;
-	Znamenatel = 0;//rand() % 40 + 12;
+	Chislitel = 0;
+	Znamenatel = 0;
 }
 Drobina::Drobina(int ch, int zn)
 {
-	Chislitel = ch;//rand() % 12 + 1;
-	Znamenatel = zn;//rand() % 40 + 12;
+	Chislitel = ch;
+	Znamenatel = zn;
 }
 Drobina::~Drobina()
 {
 }
-void Drobina::AddDrobina(int ch, int zn)
+
+
+void Drobina::Change(int chis, int znam)
 {
-	Chislitel = ch;//rand() % 12 + 1;
-	Znamenatel = zn;//rand() % 40 + 12;
+	Chislitel = chis;
+	Znamenatel = znam;
 }
 void Drobina::setChislitel(int a)
 {
@@ -39,11 +41,6 @@ int Drobina::getZnamenatel()
 	return Znamenatel;
 }
 
-void Drobina::Print()
-{
-	cout << endl << endl << Chislitel << "/" << Znamenatel << endl;
-}
-
 void Drobina::Sokratit()
 {
 
@@ -59,16 +56,24 @@ void Drobina::Sokratit()
 	}
 }
 
+void Drobina::Show()
+{
+	if (Znamenatel!=0)
+	{
+		cout << Chislitel << "/" << Znamenatel << "\t";
+	}
+}
+
 void Drobina::Umnogenie(Drobina aa)
 {
 	Chislitel *= aa.getChislitel();
 	Znamenatel *= aa.getZnamenatel();
-	Sokratit();
+	//Sokratit();
 }
 
 void Drobina::Delenie(Drobina aa)
 {
 	Chislitel *= aa.getZnamenatel();
 	Znamenatel *= aa.getChislitel();
-	Sokratit();
+	//Sokratit();
 }
